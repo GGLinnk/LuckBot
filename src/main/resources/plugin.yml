@@ -1,0 +1,8 @@
+name: LuckBot
+version: '${project.version}'
+main: fr.virtualworld.gglinnk.luckbot.LuckBot
+api-version: 1.18
+authors: [ GGLinnk ]
+description: LuckBot is a Discord bot that allow user with rôle to assign themselves a LuckPerm group.
+website: https://gglinnk.virtualworld.fr/project/luckbot
+depend: [ LuckPerms ]
