@@ -1,68 +1,30 @@
 package fr.virtualworld.gglinnk.luckbot;
 
-import com.google.common.primitives.Booleans;
 import fr.virtualworld.gglinnk.luckbot.exceptions.InvalidConfigurationFileException;
+import fr.virtualworld.gglinnk.luckbot.managers.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.logging.Logger;
 
-import net.dv8tion.jda.api.JDA;
-import net.dv8tion.jda.api.JDABuilder;
-import net.dv8tion.jda.api.entities.Activity;
-
 import net.luckperms.api.LuckPerms;
+//import net.luckperms.api.model.user.UserManager;
 
-import net.luckperms.api.model.user.UserManager;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
-class JDAManager {
-    private JDA jda;
-
-    private Logger logger;
-    private FileConfiguration config;
-
-
-    protected JDAManager(Logger logger, FileConfiguration config) {
-        this.logger = logger;
-        this.config = config;
-
-        init();
-    }
-
-    private void init() {
-        JDABuilder jdaBuilder;
-
-        jdaBuilder = JDABuilder.createDefault(this.config.getString("discord-token"));
-
-        // Disable parts of the cache
-        // jdaBuilder.disableCache(CacheFlag.MEMBER_OVERRIDES, CacheFlag.VOICE_STATE);
-        // Enable the bulk delete event
-        jdaBuilder.setBulkDeleteSplittingEnabled(false);
-        // Set activity (like "playing Something")
-        jdaBuilder.setActivity(Activity.playing("Minecraft: " + config.getString("server-ip")));
-
-        try {
-            jda = jdaBuilder.build();
-        } catch (Exception e) {
-            logger.warning(e.toString());
-            logger.warning("LuckBot cannot continue. Plugin will disable itself.");
-        }
-    }
-}
-
+@SuppressWarnings("unused")
 public final class LuckBot extends JavaPlugin {
     private boolean loaded = false;
 
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private JDAManager jdaManager;
     private Logger logger;
+    @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private LuckPerms luckPerms;
     private FileConfiguration config;
 
@@ -87,7 +49,7 @@ public final class LuckBot extends JavaPlugin {
 
         if (provider != null) {
             this.luckPerms = provider.getProvider();
-            // MOVEME UserManager userManager = this.luckPerms.getUserManager();
+            // MoveMe // UserManager userManager = this.luckPerms.getUserManager();
         }
     }
 
@@ -107,7 +69,7 @@ public final class LuckBot extends JavaPlugin {
         discordTokenMissing = Objects.requireNonNull(this.config.getString("discord-token")).isEmpty();
         serverIpMissing = Objects.requireNonNull(this.config.getString("server-ip")).isEmpty();
 
-        emptyKeys = new ArrayList<String>();
+        emptyKeys = new ArrayList<>();
         if (discordTokenMissing) emptyKeys.add("Discord Token");
         if (serverIpMissing) emptyKeys.add("Server IP");
 
@@ -124,6 +86,6 @@ public final class LuckBot extends JavaPlugin {
     @Override
     public void onDisable() {
         if (!this.loaded) return;
-
+        logger.info("LuckBot is being disabled!");
     }
 }
