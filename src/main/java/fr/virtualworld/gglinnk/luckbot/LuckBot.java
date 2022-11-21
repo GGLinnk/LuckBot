@@ -5,7 +5,6 @@ import fr.virtualworld.gglinnk.luckbot.managers.*;
 
 import java.util.ArrayList;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 import net.luckperms.api.LuckPerms;
@@ -19,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public final class LuckBot extends JavaPlugin {
-    private boolean loaded = false;
 
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private JDAManager jdaManager;
@@ -30,14 +28,21 @@ public final class LuckBot extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        logger.info("LuckBot is loading!");
         logger = this.getLogger();
 
         this.registerLuckPerms();
         this.initConfig();
-        this.loadConfig();
+        try {
+            this.loadConfig();
+        } catch (InvalidConfigurationFileException e) {
+            logger.severe(e.toString());
+            logger.warning("LuckBot failed to load");
+            return;
+        }
         this.jdaManagerInit();
 
-        this.loaded = true;
+        logger.info("LuckBot is loaded!");
     }
 
     private void jdaManagerInit() {
@@ -58,34 +63,35 @@ public final class LuckBot extends JavaPlugin {
     }
 
     private void loadConfig() throws InvalidConfigurationFileException {
-        boolean discordTokenMissing;
-        boolean serverIpMissing;
+        boolean discordTokenEmpty;
+        boolean serverIpEmpty;
+        int lastEKey;
         ArrayList<String> emptyKeys;
-        Consumer<String> log;
         String preString;
 
         this.config = getConfig();
 
-        discordTokenMissing = Objects.requireNonNull(this.config.getString("discord-token")).isEmpty();
-        serverIpMissing = Objects.requireNonNull(this.config.getString("server-ip")).isEmpty();
+        discordTokenEmpty = Objects.requireNonNull(this.config.getString("discord-token")).isEmpty();
+        serverIpEmpty = Objects.requireNonNull(this.config.getString("server-ip")).isEmpty();
 
         emptyKeys = new ArrayList<>();
-        if (discordTokenMissing) emptyKeys.add("Discord Token");
-        if (serverIpMissing) emptyKeys.add("Server IP");
+        if (discordTokenEmpty) emptyKeys.add("Discord Token");
+        if (serverIpEmpty) emptyKeys.add("Server IP");
 
-        log = discordTokenMissing ? logger::warning : logger::info;
+        lastEKey = emptyKeys.size() - 1;
+        if (emptyKeys.size() > 1)
+            preString = String.join(" and ", String.join(", ", emptyKeys.subList(0, lastEKey)), emptyKeys.get(lastEKey)) + " are ";
+        else
+            preString = emptyKeys.get(0) + " is ";
 
-        preString = String.join(", ", emptyKeys);
-        preString += (emptyKeys.size() > 1) ? " are " : " is ";
+        logger.info(preString + "missing from config!");
 
-        log.accept(preString + "missing from config!");
-
-        if (discordTokenMissing) throw new InvalidConfigurationFileException("Discord Token is required for LuckBot to work!");
+        if (discordTokenEmpty) throw new InvalidConfigurationFileException("Discord Token is required for LuckBot to work!");
     }
 
     @Override
     public void onDisable() {
-        if (!this.loaded) return;
         logger.info("LuckBot is being disabled!");
+        logger.info("LuckBot is disabled!");
     }
 }

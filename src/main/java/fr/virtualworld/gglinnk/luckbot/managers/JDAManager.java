@@ -35,8 +35,7 @@ public class JDAManager {
         try {
             jda = jdaBuilder.build();
         } catch (Exception e) {
-            logger.warning(e.toString());
-            logger.warning("LuckBot cannot continue. Plugin will disable itself.");
+            logger.severe(e.toString());
         }
     }
 }

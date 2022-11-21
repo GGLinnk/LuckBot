@@ -4,14 +4,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>fr.virtualworld.gglinnk</groupId>
+    <groupId>fr.virtualworld.gglinnk.luckbot</groupId>
     <artifactId>LuckBot</artifactId>
-    <version>0.0-DEV</version>
+    <version>0.0-DEV.01</version>
     <packaging>jar</packaging>
 
     <name>LuckBot</name>
 
-    <description>LuckBot is a Discord bot that allow user with role to assign themselves a LuckPerm group.</description>
+    <description>LuckBot is a Minecraft plugin Discord bot that allow to sync Discord rôles with LuckPerms groups.</description>
     <properties>
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
