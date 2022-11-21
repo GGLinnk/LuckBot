@@ -28,21 +28,21 @@ public final class LuckBot extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        logger.info("LuckBot is loading!");
-        logger = this.getLogger();
+        this.logger = this.getLogger();
+        this.logger.info("LuckBot is loading!");
 
         this.registerLuckPerms();
         this.initConfig();
         try {
             this.loadConfig();
         } catch (InvalidConfigurationFileException e) {
-            logger.severe(e.toString());
-            logger.warning("LuckBot failed to load");
+            this.logger.severe(e.toString());
+            this.logger.warning("LuckBot failed to load");
             return;
         }
         this.jdaManagerInit();
 
-        logger.info("LuckBot is loaded!");
+        this.logger.info("LuckBot is loaded!");
     }
 
     private void jdaManagerInit() {
@@ -63,35 +63,34 @@ public final class LuckBot extends JavaPlugin {
     }
 
     private void loadConfig() throws InvalidConfigurationFileException {
+        ArrayList<String> emptyKeys = new ArrayList<>();
+        String preString = "";
         boolean discordTokenEmpty;
         boolean serverIpEmpty;
         int lastEKey;
-        ArrayList<String> emptyKeys;
-        String preString;
 
         this.config = getConfig();
 
         discordTokenEmpty = Objects.requireNonNull(this.config.getString("discord-token")).isEmpty();
         serverIpEmpty = Objects.requireNonNull(this.config.getString("server-ip")).isEmpty();
 
-        emptyKeys = new ArrayList<>();
         if (discordTokenEmpty) emptyKeys.add("Discord Token");
         if (serverIpEmpty) emptyKeys.add("Server IP");
 
         lastEKey = emptyKeys.size() - 1;
         if (emptyKeys.size() > 1)
             preString = String.join(" and ", String.join(", ", emptyKeys.subList(0, lastEKey)), emptyKeys.get(lastEKey)) + " are ";
-        else
+        else if (emptyKeys.size() == 1)
             preString = emptyKeys.get(0) + " is ";
 
-        logger.info(preString + "missing from config!");
+        if (emptyKeys.size() > 0) this.logger.info(preString + "missing from config!");
 
         if (discordTokenEmpty) throw new InvalidConfigurationFileException("Discord Token is required for LuckBot to work!");
     }
 
     @Override
     public void onDisable() {
-        logger.info("LuckBot is being disabled!");
-        logger.info("LuckBot is disabled!");
+        this.logger.info("LuckBot is being disabled!");
+        this.logger.info("LuckBot is disabled!");
     }
 }
