@@ -21,14 +21,13 @@ public final class LuckBot extends JavaPlugin {
 
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private JDAManager jdaManager;
-    private Logger logger;
+    private final Logger logger = this.getLogger();
     @SuppressWarnings({"unused", "FieldCanBeLocal"})
     private LuckPerms luckPerms;
     private FileConfiguration config;
 
     @Override
     public void onEnable() {
-        this.logger = this.getLogger();
         this.logger.info("LuckBot is loading!");
 
         this.registerLuckPerms();
@@ -91,6 +90,7 @@ public final class LuckBot extends JavaPlugin {
     @Override
     public void onDisable() {
         this.logger.info("LuckBot is being disabled!");
+        jdaManager.shutdown();
         this.logger.info("LuckBot is disabled!");
     }
 }

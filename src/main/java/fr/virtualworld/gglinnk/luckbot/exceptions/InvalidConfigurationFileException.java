@@ -2,7 +2,6 @@ package fr.virtualworld.gglinnk.luckbot.exceptions;
 
 /**
  * Indicates that the configuration file is invalid.
- *
  * */
 public class InvalidConfigurationFileException extends RuntimeException {
 

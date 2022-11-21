@@ -38,4 +38,8 @@ public class JDAManager {
             logger.severe(e.toString());
         }
     }
+
+    public void shutdown() {
+        jda.shutdown();
+    }
 }
