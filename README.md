@@ -1,2 +1,2 @@
 # LuckBot
-A W.I.P. LuckPerms/Discord bot that allow to sync roles.
+A W.I.P. LuckBot Minecraft plugin Discord bot that allow to sync roles and groups.
