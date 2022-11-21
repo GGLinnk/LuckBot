@@ -36,10 +36,11 @@ public class JDAManager {
             jda = jdaBuilder.build();
         } catch (Exception e) {
             logger.severe(e.toString());
+            logger.throwing("JDAManager", "init", e);
         }
     }
 
     public void shutdown() {
-        jda.shutdown();
+        if (jda != null) jda.shutdown();
     }
 }
