@@ -1,4 +1,4 @@
-package fr.virtualworld.gglinnk.luckbot.managers;
+package fr.gglinnk.luckbot.managers;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;

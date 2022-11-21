@@ -1,6 +1,6 @@
 name: LuckBot
 version: '${project.version}'
-main: fr.virtualworld.gglinnk.luckbot.LuckBot
+main: fr.gglinnk.luckbot.LuckBot
 api-version: 1.18
 author: GGLinnk
 authors: [ GGLinnk ]

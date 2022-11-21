@@ -1,4 +1,4 @@
-package fr.virtualworld.gglinnk.luckbot.exceptions;
+package fr.gglinnk.luckbot.exceptions;
 
 /**
  * Indicates that the configuration file is invalid.

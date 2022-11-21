@@ -1,7 +1,7 @@
-package fr.virtualworld.gglinnk.luckbot;
+package fr.gglinnk.luckbot;
 
-import fr.virtualworld.gglinnk.luckbot.exceptions.InvalidConfigurationFileException;
-import fr.virtualworld.gglinnk.luckbot.managers.*;
+import fr.gglinnk.luckbot.exceptions.InvalidConfigurationFileException;
+import fr.gglinnk.luckbot.managers.JDAManager;
 
 import java.util.ArrayList;
 import java.util.Objects;
