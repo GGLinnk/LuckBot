@@ -69,6 +69,25 @@
         </repository>
     </repositories>
 
+    <!-- NOTE: pin transitive dependencies to versions that clear known CVEs.
+         paper-api 1.18.2 ships outdated snakeyaml/guava (provided scope, supplied
+         by the running server); these overrides quiet GitHub Dependabot alerts
+         and harden compile-time API surface. -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>2.4</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.guava</groupId>
+                <artifactId>guava</artifactId>
+                <version>33.4.8-jre</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>io.papermc.paper</groupId>
@@ -91,7 +110,7 @@
         <dependency>
             <groupId>net.dv8tion</groupId>
             <artifactId>JDA</artifactId>
-            <version>5.0.0-alpha.22</version>
+            <version>5.6.1</version>
             <exclusions>
                 <exclusion>
                     <groupId>club.minnced</groupId>
